@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Dashboard | Saurabh Thorat</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f7f8fa;
+      color: #333;
+    }
+
+    /* ── NAVBAR (same as projects page) ── */
+    header { background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.07); position: sticky; top: 0; z-index: 100; }
+    .navbar { display: flex; align-items: center; justify-content: space-between; padding: 18px 60px; }
+    .logo { font-size: 1.5rem; font-weight: 700; color: #333; }
+    .logo .highlight { color: #0b6e5f; }
+    .nav-links { list-style: none; display: flex; gap: 30px; }
+    .nav-links a { text-decoration: none; color: #555; font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+    .nav-links a:hover { color: #0b6e5f; }
+    .navbar .btn { background: #0b6e5f; color: #fff; padding: 10px 22px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
+    .navbar .btn:hover { background: #095c4f; transform: translateY(-1px); }
+
+    /* ── HERO BANNER ── */
+    .project-hero {
+      background: linear-gradient(135deg, #0b6e5f 0%, #0d8c72 50%, #0a5a4e 100%);
+      padding: 80px 60px 60px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+    }
+    .project-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -40px;
+      width: 250px; height: 250px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; margin-bottom: 24px; transition: color 0.2s; }
+    .back-link:hover { color: #fff; }
+    .back-link::before { content: '←'; font-size: 1rem; }
+    .hero-badge { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); padding: 5px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; margin-bottom: 16px; backdrop-filter: blur(4px); }
+    .project-hero h1 { font-size: 2.6rem; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+    .project-hero p.subtitle { font-size: 1.05rem; opacity: 0.85; max-width: 600px; line-height: 1.7; margin-bottom: 28px; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+    .hero-tag { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); padding: 6px 14px; border-radius: 20px; font-size: 0.82rem; backdrop-filter: blur(4px); }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-btns a { padding: 12px 26px; border-radius: 10px; font-weight: 600; font-size: 0.92rem; text-decoration: none; transition: 0.3s; }
+    .btn-white { background: #fff; color: #0b6e5f; }
+    .btn-white:hover { background: #f0faf8; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+    .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.5); }
+    .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .stat-item {
+      padding: 30px 50px;
+      text-align: center;
+      border-right: 1px solid #eee;
+      flex: 1;
+      min-width: 160px;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { font-size: 2rem; font-weight: 700; color: #0b6e5f; display: block; }
+    .stat-label { font-size: 0.82rem; color: #888; margin-top: 4px; }
+
+    /* ── MAIN CONTENT ── */
+    .project-content { max-width: 1100px; margin: 0 auto; padding: 60px 40px; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
+    .content-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border-top: 4px solid #0b6e5f;
+    }
+    .content-card h2 { font-size: 1.15rem; font-weight: 700; color: #0b6e5f; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+    .content-card ul { padding-left: 18px; }
+    .content-card ul li { margin-bottom: 10px; font-size: 0.92rem; line-height: 1.6; color: #555; }
+    .content-card ul li strong { color: #333; }
+    .full-card { background: #fff; border-radius: 16px; padding: 36px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 30px; border-top: 4px solid #0b6e5f; }
+    .full-card h2 { font-size: 1.2rem; font-weight: 700; color: #0b6e5f; margin-bottom: 20px; }
+    .full-card p { font-size: 0.95rem; line-height: 1.75; color: #555; margin-bottom: 14px; }
+    .full-card ul { padding-left: 20px; }
+    .full-card ul li { margin-bottom: 10px; font-size: 0.93rem; line-height: 1.65; color: #555; }
+    .full-card ul li strong { color: #0b6e5f; }
+
+    /* Dataset grid */
+    .dataset-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+    .dataset-item { background: #f0faf8; border-radius: 10px; padding: 16px; border-left: 3px solid #0b6e5f; }
+    .dataset-item h4 { font-size: 0.88rem; font-weight: 600; color: #0b6e5f; margin-bottom: 6px; }
+    .dataset-item p { font-size: 0.82rem; color: #666; margin: 0; }
+
+    /* Tech stack pills */
+    .tech-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+    .tech-pill { background: #f0faf8; border: 1.5px solid #0b6e5f20; color: #0b6e5f; padding: 8px 18px; border-radius: 25px; font-size: 0.85rem; font-weight: 600; }
+
+    /* Insight cards */
+    .insights-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 8px; }
+    .insight-card { background: linear-gradient(135deg, #f0faf8, #e8f7f4); border-radius: 12px; padding: 20px; border-left: 4px solid #0b6e5f; }
+    .insight-card h4 { font-size: 0.9rem; font-weight: 700; color: #0b6e5f; margin-bottom: 8px; }
+    .insight-card p { font-size: 0.85rem; color: #555; margin: 0; line-height: 1.6; }
+
+    /* Recommendation steps */
+    .rec-list { counter-reset: rec; }
+    .rec-item { display: flex; gap: 16px; margin-bottom: 18px; align-items: flex-start; }
+    .rec-num { min-width: 36px; height: 36px; background: #0b6e5f; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; }
+    .rec-text strong { display: block; font-size: 0.92rem; color: #333; margin-bottom: 3px; }
+    .rec-text span { font-size: 0.85rem; color: #777; line-height: 1.5; }
+
+    /* CTA */
+    .cta-section { background: linear-gradient(135deg, #0b6e5f, #0d8c72); border-radius: 20px; padding: 50px 40px; text-align: center; color: #fff; margin-top: 40px; }
+    .cta-section h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 12px; }
+    .cta-section p { opacity: 0.85; margin-bottom: 28px; font-size: 0.95rem; }
+    .cta-btns { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+    @media (max-width: 768px) {
+      .navbar { padding: 14px 20px; }
+      .nav-links { display: none; }
+      .project-hero { padding: 50px 20px 40px; }
+      .project-hero h1 { font-size: 1.8rem; }
+      .project-content { padding: 40px 20px; }
+      .two-col, .dataset-grid, .insights-grid { grid-template-columns: 1fr; }
+      .stat-item { padding: 20px 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header data-aos="fade-down">
+    <nav class="navbar">
+      <div class="logo">Saurabh<span class="highlight">T</span></div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="achievements.html">Achievements</a></li>
+        <li><a href="project1.html">Projects</a></li>
+        <li><a href="articles.html">Articles</a></li>
+      </ul>
+      <a href="https://drive.google.com/drive/folders/1Cd7dsGgsGnn6qkIBL7PlKAPrqbBy1S8x?usp=sharing" target="_blank" class="btn">Download CV</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+  <!-- Mobile nav overlay -->
+  <div class="nav-overlay" id="navOverlay"></div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="achievements.html">Achievements</a>
+    <a href="project1.html">Projects</a>
+    <a href="articles.html">Articles</a>
+    <a href="https://drive.google.com/drive/folders/1Cd7dsGgsGnn6qkIBL7PlKAPrqbBy1S8x?usp=sharing" target="_blank" class="btn">Download CV</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="project-hero" data-aos="fade-down">
+    <a href="project1.html" class="back-link">Back to Projects</a>
+    <div class="hero-badge">📊 Data Analytics · Power BI</div>
+    <h1>AtliQ Hardware<br>Sales Dashboard</h1>
+    <p class="subtitle">Optimizing business performance through data-driven insights — tracking $3.7B in revenue across global markets.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">Power BI</span>
+      <span class="hero-tag">ETL</span>
+      <span class="hero-tag">DAX</span>
+      <span class="hero-tag">SQL</span>
+      <span class="hero-tag">Data Modelling</span>
+      <span class="hero-tag">Data Analysis</span>
+    </div>
+    <div class="hero-btns">
+      <a href="https://github.com/saurabhthorat999/business_insights" target="_blank" class="btn-white">View on GitHub</a>
+      <a href="project1.html" class="btn-outline">← All Projects</a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-row" data-aos="fade-up">
+    <div class="stat-item">
+      <span class="stat-num">1.8M</span>
+      <span class="stat-label">Dataset Records</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">$3.7B</span>
+      <span class="stat-label">Revenue Tracked (2022)</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">78%</span>
+      <span class="stat-label">Sales from APAC & NA</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">2018–22</span>
+      <span class="stat-label">Data Coverage</span>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="project-content">
+
+    <!-- Company Background + Objective -->
+    <div class="two-col">
+      <div class="content-card" data-aos="fade-right">
+        <h2>🏢 Company Background</h2>
+        <p style="font-size:0.9rem;color:#555;line-height:1.7;margin-bottom:16px;">
+          AtliQ Hardware is a global manufacturer and seller of computer hardware and peripherals including PCs, mice, and printers.
+        </p>
+        <ul>
+          <li><strong>Retailer Channels:</strong> Brick & Mortar (Croma, Best Buy), E-commerce (Amazon, Flipkart)</li>
+          <li><strong>Direct Channels:</strong> AtliQ E-store and AtliQ Exclusive</li>
+          <li><strong>Distributors:</strong> Used in restricted trade regions (e.g., Neptune)</li>
+        </ul>
+      </div>
+      <div class="content-card" data-aos="fade-left">
+        <h2>🎯 Project Objective</h2>
+        <ul>
+          <li><strong>Financial Management:</strong> Analyzing gross margin and profitability</li>
+          <li><strong>Customer Segmentation:</strong> Identifying ideal customers</li>
+          <li><strong>Product Analysis:</strong> Evaluating sales performance</li>
+          <li><strong>Inventory Management:</strong> Reducing stockouts and overstocking</li>
+          <li><strong>Data-Driven Decisions:</strong> Enhancing market strategies</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Dataset -->
+    <div class="full-card" data-aos="fade-up">
+      <h2>🗄️ Dataset Overview</h2>
+      <p>The dataset comprises <strong>1.8 million records (2018–2022)</strong>, covering three core areas:</p>
+      <div class="dataset-grid">
+        <div class="dataset-item">
+          <h4>Customer Details</h4>
+          <p>Location, forecast quantity, net sales data across retail and direct channels</p>
+        </div>
+        <div class="dataset-item">
+          <h4>Product Details</h4>
+          <p>Categories, manufacturing cost, and revenue metrics per SKU</p>
+        </div>
+        <div class="dataset-item">
+          <h4>Market Details</h4>
+          <p>Geographic performance data and operational expenses by region</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tech Stack -->
+    <div class="full-card" data-aos="fade-up">
+      <h2>⚙️ Technologies Used</h2>
+      <div class="tech-grid">
+        <span class="tech-pill">Microsoft Power BI Desktop</span>
+        <span class="tech-pill">Power BI Service</span>
+        <span class="tech-pill">DAX</span>
+        <span class="tech-pill">MySQL</span>
+        <span class="tech-pill">Excel</span>
+        <span class="tech-pill">ETL Pipeline</span>
+        <span class="tech-pill">Data Modelling</span>
+      </div>
+    </div>
+
+    <!-- Key Insights -->
+    <div class="full-card" data-aos="fade-up">
+      <h2>💡 Key Insights</h2>
+      <div class="insights-grid">
+        <div class="insight-card">
+          <h4>📈 Revenue Growth</h4>
+          <p>Sales grew from $111M to $3.7B between 2019 and 2022 — an extraordinary 33× increase.</p>
+        </div>
+        <div class="insight-card">
+          <h4>🦠 Pandemic Impact</h4>
+          <p>Sales dropped 75% in May 2020 during COVID-19 lockdowns, then rebounded stronger than pre-pandemic levels.</p>
+        </div>
+        <div class="insight-card">
+          <h4>📅 Seasonality</h4>
+          <p>Peak sales occur consistently in November–December each year, driven by holiday purchasing cycles.</p>
+        </div>
+        <div class="insight-card">
+          <h4>🌏 Regional Sales</h4>
+          <p>APAC and North America together contribute 78% of total sales, making them the core revenue markets.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recommendations -->
+    <div class="full-card" data-aos="fade-up">
+      <h2>🚀 Recommendations</h2>
+      <div class="rec-list">
+        <div class="rec-item">
+          <div class="rec-num">1</div>
+          <div class="rec-text">
+            <strong>Improve Gross Margin</strong>
+            <span>Optimize supply chain forecasting and monitor raw material costs to improve profitability margins.</span>
+          </div>
+        </div>
+        <div class="rec-item">
+          <div class="rec-num">2</div>
+          <div class="rec-text">
+            <strong>Increase Profitability</strong>
+            <span>Focus on high-margin products and improve online retail channel performance.</span>
+          </div>
+        </div>
+        <div class="rec-item">
+          <div class="rec-num">3</div>
+          <div class="rec-text">
+            <strong>Expand Product Offerings</strong>
+            <span>Diversify the product lineup with premium models targeting higher-spending customer segments.</span>
+          </div>
+        </div>
+        <div class="rec-item">
+          <div class="rec-num">4</div>
+          <div class="rec-text">
+            <strong>Optimize Sales Channels</strong>
+            <span>Expand affiliate marketing and influencer partnerships to drive e-commerce growth.</span>
+          </div>
+        </div>
+        <div class="rec-item">
+          <div class="rec-num">5</div>
+          <div class="rec-text">
+            <strong>Regional Growth Strategies</strong>
+            <span>Continue investing in NA & APAC while expanding market presence into LATAM.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section" data-aos="zoom-in">
+      <h2>Explore the Project</h2>
+      <p>Check out the full source code and documentation on GitHub.</p>
+      <div class="cta-btns">
+        <a href="https://github.com/saurabhthorat999/business_insights" target="_blank" class="btn-white">View on GitHub</a>
+        <a href="project1.html" class="btn-outline">← Back to Projects</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EV Market Analysis | Saurabh Thorat</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f7f8fa;
+      color: #333;
+    }
+
+    /* ── NAVBAR ── */
+    header { background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.07); position: sticky; top: 0; z-index: 100; }
+    .navbar { display: flex; align-items: center; justify-content: space-between; padding: 18px 60px; }
+    .logo { font-size: 1.5rem; font-weight: 700; color: #333; }
+    .logo .highlight { color: #0b6e5f; }
+    .nav-links { list-style: none; display: flex; gap: 30px; }
+    .nav-links a { text-decoration: none; color: #555; font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+    .nav-links a:hover { color: #0b6e5f; }
+    .navbar .btn { background: #0b6e5f; color: #fff; padding: 10px 22px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
+    .navbar .btn:hover { background: #095c4f; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .project-hero {
+      background: linear-gradient(135deg, #0d4f3c 0%, #0b6e5f 50%, #117a65 100%);
+      padding: 80px 60px 60px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 350px; height: 350px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+    .project-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: 30%;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+    }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; margin-bottom: 24px; transition: color 0.2s; }
+    .back-link:hover { color: #fff; }
+    .back-link::before { content: '←'; font-size: 1rem; }
+    .hero-badge { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); padding: 5px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; margin-bottom: 16px; backdrop-filter: blur(4px); }
+    .project-hero h1 { font-size: 2.6rem; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+    .project-hero p.subtitle { font-size: 1.05rem; opacity: 0.85; max-width: 620px; line-height: 1.7; margin-bottom: 28px; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+    .hero-tag { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); padding: 6px 14px; border-radius: 20px; font-size: 0.82rem; backdrop-filter: blur(4px); }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-btns a { padding: 12px 26px; border-radius: 10px; font-weight: 600; font-size: 0.92rem; text-decoration: none; transition: 0.3s; }
+    .btn-white { background: #fff; color: #0b6e5f; }
+    .btn-white:hover { background: #f0faf8; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+    .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.5); }
+    .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+    /* ── STATS ── */
+    .stats-row {
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .stat-item {
+      padding: 28px 40px;
+      text-align: center;
+      border-right: 1px solid #eee;
+      flex: 1;
+      min-width: 140px;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { font-size: 1.9rem; font-weight: 700; color: #0b6e5f; display: block; }
+    .stat-label { font-size: 0.8rem; color: #888; margin-top: 4px; }
+
+    /* ── CONTENT ── */
+    .project-content { max-width: 1100px; margin: 0 auto; padding: 60px 40px; }
+
+    .full-card { background: #fff; border-radius: 16px; padding: 36px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 30px; border-top: 4px solid #0b6e5f; }
+    .full-card h2 { font-size: 1.2rem; font-weight: 700; color: #0b6e5f; margin-bottom: 20px; }
+    .full-card p { font-size: 0.95rem; line-height: 1.75; color: #555; margin-bottom: 14px; }
+    .full-card ul { padding-left: 20px; }
+    .full-card ul li { margin-bottom: 10px; font-size: 0.93rem; line-height: 1.65; color: #555; }
+    .full-card ul li strong { color: #0b6e5f; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+    .content-card { background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border-top: 4px solid #0b6e5f; }
+    .content-card h2 { font-size: 1.1rem; font-weight: 700; color: #0b6e5f; margin-bottom: 16px; }
+    .content-card ul { padding-left: 18px; }
+    .content-card ul li { margin-bottom: 10px; font-size: 0.9rem; line-height: 1.6; color: #555; }
+    .content-card ul li strong { color: #333; }
+
+    /* Manufacturer table */
+    .maker-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.88rem; }
+    .maker-table thead tr { background: #0b6e5f; color: #fff; }
+    .maker-table thead th { padding: 12px 16px; text-align: left; font-weight: 600; }
+    .maker-table tbody tr { border-bottom: 1px solid #eee; }
+    .maker-table tbody tr:hover { background: #f0faf8; }
+    .maker-table tbody td { padding: 12px 16px; color: #555; }
+    .badge-top { background: #d4edda; color: #155724; padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; }
+    .badge-bottom { background: #f8d7da; color: #721c24; padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; }
+
+    /* Tech pills */
+    .tech-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+    .tech-pill { background: #f0faf8; border: 1.5px solid rgba(11,110,95,0.15); color: #0b6e5f; padding: 8px 18px; border-radius: 25px; font-size: 0.85rem; font-weight: 600; }
+
+    /* Insight cards */
+    .insights-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 8px; }
+    .insight-card { background: linear-gradient(135deg, #f0faf8, #e8f7f4); border-radius: 12px; padding: 20px; border-left: 4px solid #0b6e5f; }
+    .insight-card h4 { font-size: 0.9rem; font-weight: 700; color: #0b6e5f; margin-bottom: 8px; }
+    .insight-card p { font-size: 0.85rem; color: #555; margin: 0; line-height: 1.6; }
+
+    /* Image gallery */
+    .gallery-img { width: 100%; border-radius: 10px; margin-top: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+
+    /* CTA */
+    .cta-section { background: linear-gradient(135deg, #0b6e5f, #0d8c72); border-radius: 20px; padding: 50px 40px; text-align: center; color: #fff; margin-top: 40px; }
+    .cta-section h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 12px; }
+    .cta-section p { opacity: 0.85; margin-bottom: 28px; font-size: 0.95rem; }
+    .cta-btns { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+    @media (max-width: 768px) {
+      .navbar { padding: 14px 20px; }
+      .nav-links { display: none; }
+      .project-hero { padding: 50px 20px 40px; }
+      .project-hero h1 { font-size: 1.8rem; }
+      .project-content { padding: 40px 20px; }
+      .two-col, .insights-grid { grid-template-columns: 1fr; }
+      .stat-item { padding: 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header data-aos="fade-down">
+    <nav class="navbar">
+      <div class="logo">Saurabh<span class="highlight">T</span></div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="achievements.html">Achievements</a></li>
+        <li><a href="project1.html">Projects</a></li>
+        <li><a href="articles.html">Articles</a></li>
+      </ul>
+      <a href="https://drive.google.com/drive/folders/1Cd7dsGgsGnn6qkIBL7PlKAPrqbBy1S8x?usp=sharing" target="_blank" class="btn">Download CV</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+  <!-- Mobile nav overlay -->
+  <div class="nav-overlay" id="navOverlay"></div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="achievements.html">Achievements</a>
+    <a href="project1.html">Projects</a>
+    <a href="articles.html">Articles</a>
+    <a href="https://drive.google.com/drive/folders/1Cd7dsGgsGnn6qkIBL7PlKAPrqbBy1S8x?usp=sharing" target="_blank" class="btn">Download CV</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="project-hero" data-aos="fade-down">
+    <a href="project1.html" class="back-link">Back to Projects</a>
+    <div class="hero-badge">⚡ EV Industry · Market Research</div>
+    <h1>Electric Vehicle (EV)<br>Market Analysis</h1>
+    <p class="subtitle">A deep dive into EV sales trends, key manufacturers, and future projections across India (2022–2024).</p>
+    <div class="hero-tags">
+      <span class="hero-tag">Python</span>
+      <span class="hero-tag">SQL</span>
+      <span class="hero-tag">Excel</span>
+      <span class="hero-tag">Power BI</span>
+      <span class="hero-tag">Data Analysis</span>
+    </div>
+    <div class="hero-btns">
+      <a href="https://github.com/saurabhthorat999/EV-Sales-analysis" target="_blank" class="btn-white">View on GitHub</a>
+      <a href="project1.html" class="btn-outline">← All Projects</a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-row" data-aos="fade-up">
+    <div class="stat-item">
+      <span class="stat-num">2M</span>
+      <span class="stat-label">Total EVs Sold</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">57M</span>
+      <span class="stat-label">Total Vehicles Sold</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">3.61%</span>
+      <span class="stat-label">EV Penetration Rate</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">93.91%</span>
+      <span class="stat-label">EV CAGR Growth Rate</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">54.21M</span>
+      <span class="stat-label">Projected Sales by 2030</span>
+    </div>
+  </div>
+
+  <div class="project-content">
+
+    <!-- Overview -->
+    <div class="full-card" data-aos="fade-up">
+      <h2>📋 Project Overview</h2>
+      <p>The Electric Vehicle (EV) industry has seen rapid transformation over the past few years, driven by technological advancements, government policies, and shifting consumer preferences. This analysis covers the Indian EV market from 2022 to 2024, examining sales trends, manufacturer performance, state-wise penetration, and seasonal patterns to help stakeholders make strategic investment decisions.</p>
+    </div>
+
+    <!-- Tech Stack -->
+    <div class="full-card" data-aos="fade-up">
+      <h2>⚙️ Technologies Used</h2>
+      <div class="tech-grid">
+        <span class="tech-pill">Power BI Desktop</span>
+        <span class="tech-pill">Power BI Service</span>
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">MySQL</span>
+        <span class="tech-pill">Excel</span>
+      </div>
+    </div>
+
+    <!-- Manufacturer Table -->
+    <div class="full-card" data-aos="fade-up">
+      <h2>🏭 Top & Bottom EV Manufacturers (2-Wheelers)</h2>
+      <table class="maker-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Manufacturer</th>
+            <th>Sales FY 2023–24</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Ola Electric</td><td>475,000</td><td><span class="badge-top">Top Performer</span></td></tr>
+          <tr><td>2</td><td>TVS</td><td>263,000</td><td><span class="badge-top">Top Performer</span></td></tr>
+          <tr><td>3</td><td>Ather Energy</td><td>184,000</td><td><span class="badge-top">Top Performer</span></td></tr>
+          <tr><td>8</td><td>Battre Electric</td><td>4,840</td><td><span class="badge-bottom">Bottom Performer</span></td></tr>
+          <tr><td>9</td><td>Jitendra EV</td><td>8,560</td><td><span class="badge-bottom">Bottom Performer</span></td></tr>
+          <tr><td>10</td><td>Kinetic Green</td><td>9,560</td><td><span class="badge-bottom">Bottom Performer</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Key Insights -->
+    <div class="full-card" data-aos="fade-up">
+      <h2>💡 Key Insights</h2>
+      <div class="insights-grid">
+        <div class="insight-card">
+          <h4>🗺️ State Penetration</h4>
+          <p>Top 5 states with highest EV penetration in FY 2024 lead due to strong government policies, infrastructure, and urban adoption rates.</p>
+        </div>
+        <div class="insight-card">
+          <h4>📉 Declining States</h4>
+          <p>Some early-mover states struggled with competition and changing preferences, lacking continuous infrastructure expansion.</p>
+        </div>
+        <div class="insight-card">
+          <h4>📅 Seasonal Trends</h4>
+          <p>Sales peak in Q3 and Q4 (Oct–Mar) due to Diwali and New Year festivals. Q1 & Q2 see slower activity, requiring targeted marketing.</p>
+        </div>
+        <div class="insight-card">
+          <h4>📈 4-Wheeler CAGR</h4>
+          <p>Certain 4-wheeler manufacturers achieved significant growth by focusing on battery technology, affordability, and after-sales services.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts/Screenshots -->
+    <div class="two-col" data-aos="fade-up">
+      <div class="content-card">
+        <h2>📊 EV Penetration by State</h2>
+        <img src="https://saurabhthorat999.github.io/n_portfolio/images/ev_trends.JPG" alt="EV Penetration Trends" class="gallery-img">
+      </div>
+      <div class="content-card">
+        <h2>📅 Quarterly Sales Trends</h2>
+        <img src="https://saurabhthorat999.github.io/n_portfolio/images/quartely_sales.JPG" alt="Quarterly Sales Trends" class="gallery-img">
+      </div>
+    </div>
+
+    <div class="full-card" data-aos="fade-up">
+      <h2>🏆 Top 5 EV Makers (4-Wheelers) – CAGR Report</h2>
+      <img src="https://saurabhthorat999.github.io/n_portfolio/images/top_5_ev_makers_cagr.JPG" alt="Top 5 EV Makers CAGR" class="gallery-img">
+    </div>
+
+    <!-- Recommendations -->
+    <div class="full-card" data-aos="fade-up">
+      <h2>🚀 Business Recommendations</h2>
+      <ul>
+        <li><strong>Strong Growth Potential:</strong> Prioritize investments in Goa, Karnataka, and Delhi for expanding EV infrastructure.</li>
+        <li><strong>Seasonal Strategy:</strong> Maximize sales efforts in peak months (Oct–Mar); launch festival-season promotions.</li>
+        <li><strong>Competitive Landscape:</strong> Ola Electric dominates the 2-wheeler space while Hero Electric struggles — focus on differentiation through battery range and service network.</li>
+        <li><strong>Infrastructure Investment:</strong> Key to sustaining growth; expand charging networks in Tier 2 & Tier 3 cities.</li>
+        <li><strong>Battery Innovation:</strong> Invest in R&D to reduce costs and improve range per charge to drive mass adoption.</li>
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section" data-aos="zoom-in">
+      <h2>Explore the Project</h2>
+      <p>Full source code, SQL queries, and Power BI reports available on GitHub.</p>
+      <div class="cta-btns">
+        <a href="https://github.com/saurabhthorat999/EV-Sales-analysis" target="_blank" class="btn-white">View on GitHub</a>
+        <a href="project1.html" class="btn-outline">← Back to Projects</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  
+  <script src="script.js"></script>
+</body>
+</html>
