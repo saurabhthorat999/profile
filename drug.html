@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drug Performance Dashboard | Saurabh Thorat</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f7f8fa;
+      color: #333;
+    }
+
+    /* ── NAVBAR (same as projects page) ── */
+    header { background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.07); position: sticky; top: 0; z-index: 100; }
+    .navbar { display: flex; align-items: center; justify-content: space-between; padding: 18px 60px; }
+    .logo { font-size: 1.5rem; font-weight: 700; color: #333; }
+    .logo .highlight { color: #0b6e5f; }
+    .nav-links { list-style: none; display: flex; gap: 30px; }
+    .nav-links a { text-decoration: none; color: #555; font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+    .nav-links a:hover { color: #0b6e5f; }
+    .navbar .btn { background: #0b6e5f; color: #fff; padding: 10px 22px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
+    .navbar .btn:hover { background: #095c4f; transform: translateY(-1px); }
+
+    /* ── HERO BANNER ── */
+    .project-hero {
+      background: linear-gradient(135deg, #0b6e5f 0%, #0d8c72 50%, #0a5a4e 100%);
+      padding: 80px 60px 60px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+    }
+    .project-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -40px;
+      width: 250px; height: 250px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; margin-bottom: 24px; transition: color 0.2s; }
+    .back-link:hover { color: #fff; }
+    .back-link::before { content: '←'; font-size: 1rem; }
+    .hero-badge { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); padding: 5px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; margin-bottom: 16px; backdrop-filter: blur(4px); }
+    .project-hero h1 { font-size: 2.6rem; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+    .project-hero p.subtitle { font-size: 1.05rem; opacity: 0.85; max-width: 600px; line-height: 1.7; margin-bottom: 28px; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+    .hero-tag { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); padding: 6px 14px; border-radius: 20px; font-size: 0.82rem; backdrop-filter: blur(4px); }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-btns a { padding: 12px 26px; border-radius: 10px; font-weight: 600; font-size: 0.92rem; text-decoration: none; transition: 0.3s; }
+    .btn-white { background: #fff; color: #0b6e5f; }
+    .btn-white:hover { background: #f0faf8; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+    .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.5); }
+    .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .stat-item {
+      padding: 30px 50px;
+      text-align: center;
+      border-right: 1px solid #eee;
+      flex: 1;
+      min-width: 160px;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { font-size: 2rem; font-weight: 700; color: #0b6e5f; display: block; }
+    .stat-label { font-size: 0.82rem; color: #888; margin-top: 4px; }
+
+    /* ── MAIN CONTENT ── */
+    .project-content { max-width: 1100px; margin: 0 auto; padding: 60px 40px; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
+    .content-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border-top: 4px solid #0b6e5f;
+    }
+    .content-card h2 { font-size: 1.15rem; font-weight: 700; color: #0b6e5f; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+    .content-card ul { padding-left: 18px; }
+    .content-card ul li { margin-bottom: 10px; font-size: 0.92rem; line-height: 1.6; color: #555; }
+    .content-card ul li strong { color: #333; }
+    .full-card { background: #fff; border-radius: 16px; padding: 36px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 30px; border-top: 4px solid #0b6e5f; }
+    .full-card h2 { font-size: 1.2rem; font-weight: 700; color: #0b6e5f; margin-bottom: 20px; }
+    .full-card p { font-size: 0.95rem; line-height: 1.75; color: #555; margin-bottom: 14px; }
+    .full-card ul { padding-left: 20px; }
+    .full-card ul li { margin-bottom: 10px; font-size: 0.93rem; line-height: 1.65; color: #555; }
+    .full-card ul li strong { color: #0b6e5f; }
+
+    /* Dataset grid */
+    .dataset-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+    .dataset-item { background: #f0faf8; border-radius: 10px; padding: 16px; border-left: 3px solid #0b6e5f; }
+    .dataset-item h4 { font-size: 0.88rem; font-weight: 600; color: #0b6e5f; margin-bottom: 6px; }
+    .dataset-item p { font-size: 0.82rem; color: #666; margin: 0; }
+
+    /* Tech stack pills */
+    .tech-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+    .tech-pill { background: #f0faf8; border: 1.5px solid #0b6e5f20; color: #0b6e5f; padding: 8px 18px; border-radius: 25px; font-size: 0.85rem; font-weight: 600; }
+
+    /* Insight cards */
+    .insights-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 8px; }
+    .insight-card { background: linear-gradient(135deg, #f0faf8, #e8f7f4); border-radius: 12px; padding: 20px; border-left: 4px solid #0b6e5f; }
+    .insight-card h4 { font-size: 0.9rem; font-weight: 700; color: #0b6e5f; margin-bottom: 8px; }
+    .insight-card p { font-size: 0.85rem; color: #555; margin: 0; line-height: 1.6; }
+    .todo { background: #fff4e0; color: #8a4b00; border-radius: 4px; padding: 0 4px; font-weight: 500; }
+
+    /* Recommendation steps */
+    .rec-list { counter-reset: rec; }
+    .rec-item { display: flex; gap: 16px; margin-bottom: 18px; align-items: flex-start; }
+    .rec-num { min-width: 36px; height: 36px; background: #0b6e5f; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; }
+    .rec-text strong { display: block; font-size: 0.92rem; color: #333; margin-bottom: 3px; }
+    .rec-text span { font-size: 0.85rem; color: #777; line-height: 1.5; }
+
+    /* Dashboard preview + code */
+    .preview-img { display: block; width: 100%; height: auto; min-height: 200px; border-radius: 12px; border: 1px solid #e5eaf0; background: #f0faf8; }
+    .pbi-wrap { position: relative; width: 100%; aspect-ratio: 600 / 373.5; border-radius: 12px; overflow: hidden; border: 1px solid #e5eaf0; background: #f0faf8; }
+    .pbi-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .preview-cap { font-size: 0.82rem; color: #777; margin: 12px 0 0 !important; }
+    .code-block { background: #0b2540; color: #e6edf6; border-radius: 12px; padding: 20px 22px; overflow-x: auto; font: 0.82rem/1.65 Consolas, 'Courier New', monospace; margin-top: 8px; }
+
+    /* CTA */
+    .cta-section { background: linear-gradient(135deg, #0b6e5f, #0d8c72); border-radius: 20px; padding: 50px 40px; text-align: center; color: #fff; margin-top: 40px; }
+    .cta-section h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 12px; }
+    .cta-section p { opacity: 0.85; margin-bottom: 28px; font-size: 0.95rem; }
+    .cta-btns { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .cta-btns a { padding: 12px 26px; border-radius: 10px; font-weight: 600; font-size: 0.92rem; text-decoration: none; transition: 0.3s; }
+
+    @media (max-width: 768px) {
+      .navbar { padding: 14px 20px; }
+      .nav-links { display: none; }
+      .project-hero { padding: 50px 20px 40px; }
+      .project-hero h1 { font-size: 1.8rem; }
+      .project-content { padding: 40px 20px; }
+      .two-col, .dataset-grid, .insights-grid { grid-template-columns: 1fr; }
+      .stat-item { padding: 20px 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header data-aos="fade-down">
+    <nav class="navbar">
+      <div class="logo">Saurabh<span class="highlight">T</span></div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="achievements.html">Achievements</a></li>
+        <li><a href="project1.html">Projects</a></li>
+        <li><a href="articles.html">Articles</a></li>
+      </ul>
+      <a href="https://drive.google.com/drive/folders/1Cd7dsGgsGnn6qkIBL7PlKAPrqbBy1S8x?usp=sharing" target="_blank" class="btn">Download CV</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+  <!-- Mobile nav overlay -->
+  <div class="nav-overlay" id="navOverlay"></div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="achievements.html">Achievements</a>
+    <a href="project1.html">Projects</a>
+    <a href="articles.html">Articles</a>
+    <a href="https://drive.google.com/drive/folders/1Cd7dsGgsGnn6qkIBL7PlKAPrqbBy1S8x?usp=sharing" target="_blank" class="btn">Download CV</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="project-hero" data-aos="fade-down">
+    <a href="project1.html" class="back-link">Back to Projects</a>
+    <div class="hero-badge">📊 Data Analytics · Power BI</div>
+    <h1>Drug Performance<br>Analytics Dashboard</h1>
+    <p class="subtitle">Comparing drugs across 37 common conditions by reviews, effectiveness, ease of use, satisfaction, price and value for money.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">Power BI</span>
+      <span class="hero-tag">Power Query</span>
+      <span class="hero-tag">DAX</span>
+      <span class="hero-tag">Data Modelling</span>
+      <span class="hero-tag">Data Analysis</span>
+      <span class="hero-tag">GitHub</span>
+    </div>
+    <div class="hero-btns">
+      <!-- Replace with your repository link -->
+      <a href="#live-dashboard" class="btn-white">View Live Dashboard</a>
+      <a href="https://github.com/saurabhthorat999/Drug-performance" target="_blank" class="btn-outline">View on GitHub</a>
+      <a href="project1.html" class="btn-outline">← All Projects</a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-row" data-aos="fade-up">
+    <div class="stat-item">
+      <span class="stat-num">37</span>
+      <span class="stat-label">Conditions Covered</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">10</span>
+      <span class="stat-label">Source Columns</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">11</span>
+      <span class="stat-label">DAX Measures</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">4</span>
+      <span class="stat-label">Drug Types (OTC, RX, RX/OTC, Unknown)</span>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="project-content">
+
+    <!-- Background + Objective -->
+    <div class="two-col">
+      <div class="content-card" data-aos="fade-right">
+        <h2>💊 Project Background</h2>
+        <p style="font-size:0.9rem;color:#555;line-height:1.7;margin-bottom:16px;">
+          People choosing a drug usually see only a star rating. This project brings reviews, ratings and price together so drugs can be compared properly.
+        </p>
+        <ul>
+          <li><strong>Source:</strong> Drug.csv, hosted in a GitHub repository</li>
+          <li><strong>Ratings:</strong> Effectiveness, ease of use and satisfaction from customer reviews</li>
+          <li><strong>Extra context:</strong> Drug type, form, indication and average price</li>
+        </ul>
+      </div>
+      <div class="content-card" data-aos="fade-left">
+        <h2>🎯 Project Objective</h2>
+        <ul>
+          <li><strong>Review Volume:</strong> Finding which conditions get the most reviews</li>
+          <li><strong>Rating Comparison:</strong> Comparing OTC, RX and RX/OTC drugs</li>
+          <li><strong>Price Analysis:</strong> Understanding price by drug form</li>
+          <li><strong>Value for Money:</strong> Spotting drugs with strong ratings at a low price</li>
+          <li><strong>Fair Ranking:</strong> Weighting ratings by number of reviews</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Dashboard preview -->
+    <div class="full-card" id="live-dashboard" data-aos="fade-up">
+      <h2>🖥️ Live Dashboard</h2>
+      <div class="pbi-wrap">
+        <iframe title="Drug Performance" src="https://app.powerbi.com/view?r=eyJrIjoiZDBhNDk0YmYtNjZiZS00NDE0LWFhOTYtY2UwODJiMGM2OGUyIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9" frameborder="0" allowfullscreen="true" loading="lazy"></iframe>
+      </div>
+      <p class="preview-cap">Interactive Power BI report: use the slicers and click any chart to filter. <a href="https://app.powerbi.com/view?r=eyJrIjoiZDBhNDk0YmYtNjZiZS00NDE0LWFhOTYtY2UwODJiMGM2OGUyIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9" target="_blank" rel="noopener" style="color:#0b6e5f;font-weight:600;">Open full screen</a></p>
+    </div>
+
+    <!-- Dataset -->
+    <div class="full-card" data-aos="fade-up">
+      <h2>🗄️ Dataset Overview</h2>
+      <p>The dataset has <strong>10 columns</strong> covering three core areas:</p>
+      <div class="dataset-grid">
+        <div class="dataset-item">
+          <h4>Drug Details</h4>
+          <p>Drug, Indication, Type (OTC, RX, RX/OTC) and Form such as tablet or capsule</p>
+        </div>
+        <div class="dataset-item">
+          <h4>Review Metrics</h4>
+          <p>Reviews, Effective, EaseOfUse and Satisfaction, based on customer reviews</p>
+        </div>
+        <div class="dataset-item">
+          <h4>Condition &amp; Price</h4>
+          <p>The medical condition for each drug and its average price</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tech Stack -->
+    <div class="full-card" data-aos="fade-up">
+      <h2>⚙️ Technologies Used</h2>
+      <div class="tech-grid">
+        <span class="tech-pill">Microsoft Power BI Desktop</span>
+        <span class="tech-pill">Power Query</span>
+        <span class="tech-pill">DAX</span>
+        <span class="tech-pill">Data Modelling</span>
+        <span class="tech-pill">GitHub (raw CSV)</span>
+      </div>
+    </div>
+
+    <!-- Process -->
+    <div class="full-card" data-aos="fade-up">
+      <h2>🛠️ How I Built It</h2>
+      <div class="rec-list">
+        <div class="rec-item">
+          <div class="rec-num">1</div>
+          <div class="rec-text">
+            <strong>Connected to GitHub</strong>
+            <span>Loaded Drug.csv with the Web connector using the raw file URL, so the report can refresh when the file changes.</span>
+          </div>
+        </div>
+        <div class="rec-item">
+          <div class="rec-num">2</div>
+          <div class="rec-text">
+            <strong>Cleaned the data in Power Query</strong>
+            <span>Set data types, trimmed text and replaced blank Type values with "Unknown" so slicers and charts stay readable.</span>
+          </div>
+        </div>
+        <div class="rec-item">
+          <div class="rec-num">3</div>
+          <div class="rec-text">
+            <strong>Wrote the DAX measures</strong>
+            <span>Built review-weighted ratings, price-based value scores and a satisfaction level label.</span>
+          </div>
+        </div>
+        <div class="rec-item">
+          <div class="rec-num">4</div>
+          <div class="rec-text">
+            <strong>Designed the dashboard</strong>
+            <span>Planned a mockup first, then built KPI cards, slicers for Condition, Indication, Type, Form and Drug, and the main charts.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAX -->
+    <div class="full-card" data-aos="fade-up">
+      <h2>🧮 Key DAX Measures</h2>
+      <p>Each rating is multiplied by its number of reviews before averaging, so a drug with 3,000 reviews counts for more than one with 3.</p>
+<pre class="code-block">Weighted Satisfaction =
+DIVIDE(
+    SUMX(Drug, Drug[Satisfaction] * Drug[Reviews]),
+    SUM(Drug[Reviews])
+)
+
+Overall Value Score =
+DIVIDE(
+    ([Weighted Effective] + [Weighted EaseOfUse] + [Weighted Satisfaction]) / 3,
+    [Avg Price]
+)
+
+Satisfaction Level =
+VAR s = [Weighted Satisfaction]
+RETURN
+SWITCH(
+    TRUE(),
+    ISBLANK(s), BLANK(),
+    s &lt; 1, "Very Unsatisfied",
+    s &lt; 2, "Unsatisfied",
+    s &lt; 3, "Partly Satisfied",
+    s &lt; 4, "More Than Satisfied",
+    s &lt;= 5, "Very Satisfied"
+)</pre>
+    </div>
+
+    <!-- Key Insights -->
+    <div class="full-card" data-aos="fade-up">
+      <h2>💡 Key Insights</h2>
+      <div class="insights-grid">
+        <div class="insight-card">
+          <h4>📈 Review Volume</h4>
+          <p><span class="todo">Add finding:</span> which conditions get the most reviews.</p>
+        </div>
+        <div class="insight-card">
+          <h4>💊 OTC vs RX</h4>
+          <p><span class="todo">Add finding:</span> how OTC, RX and RX/OTC drugs compare on satisfaction.</p>
+        </div>
+        <div class="insight-card">
+          <h4>💰 Price vs Satisfaction</h4>
+          <p><span class="todo">Add finding:</span> where a higher price does or does not mean higher satisfaction.</p>
+        </div>
+        <div class="insight-card">
+          <h4>⭐ Best Value</h4>
+          <p><span class="todo">Add finding:</span> which drugs have the highest Overall Value Score.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learnings -->
+    <div class="full-card" data-aos="fade-up">
+      <h2>🚀 Key Learnings</h2>
+      <div class="rec-list">
+        <div class="rec-item">
+          <div class="rec-num">1</div>
+          <div class="rec-text">
+            <strong>Weight ratings by reviews</strong>
+            <span>A plain average treats a drug with 3 reviews like one with 3,000, which can mislead.</span>
+          </div>
+        </div>
+        <div class="rec-item">
+          <div class="rec-num">2</div>
+          <div class="rec-text">
+            <strong>Set a minimum review count</strong>
+            <span>Filtering out drugs with very few reviews keeps rankings and scatter charts reliable.</span>
+          </div>
+        </div>
+        <div class="rec-item">
+          <div class="rec-num">3</div>
+          <div class="rec-text">
+            <strong>Clean blanks before visuals</strong>
+            <span>Replacing empty values with "Unknown" avoids confusing "(Blank)" labels in slicers and charts.</span>
+          </div>
+        </div>
+        <div class="rec-item">
+          <div class="rec-num">4</div>
+          <div class="rec-text">
+            <strong>Treat value scores as a guide</strong>
+            <span>Value Score helps explore the data, but it says nothing about which drug is right for a person.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section" data-aos="zoom-in">
+      <h2>Explore the Project</h2>
+      <p>Check out the full source code and documentation on GitHub.</p>
+      <div class="cta-btns">
+        <a href="https://github.com/saurabhthorat999" target="_blank" class="btn-white">View on GitHub</a>
+        <a href="project1.html" class="btn-outline">← Back to Projects</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script src="script.js"></script>
+</body>
+</html>
