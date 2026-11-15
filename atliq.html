@@ -107,6 +107,12 @@
     .full-card ul li { margin-bottom: 10px; font-size: 0.93rem; line-height: 1.65; color: #555; }
     .full-card ul li strong { color: #0b6e5f; }
 
+    /* Live dashboard embed */
+    .pbi-wrap { position: relative; width: 100%; aspect-ratio: 600 / 373.5; border-radius: 12px; overflow: hidden; border: 1px solid #e5eaf0; background: #f0faf8; }
+    .pbi-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .preview-cap { font-size: 0.82rem; color: #777; margin: 12px 0 0 !important; }
+    .preview-cap a { color: #0b6e5f; font-weight: 600; }
+
     /* Dataset grid */
     .dataset-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
     .dataset-item { background: #f0faf8; border-radius: 10px; padding: 16px; border-left: 3px solid #0b6e5f; }
@@ -191,7 +197,8 @@
       <span class="hero-tag">Data Analysis</span>
     </div>
     <div class="hero-btns">
-      <a href="https://github.com/saurabhthorat999/business_insights" target="_blank" class="btn-white">View on GitHub</a>
+      <a href="#live-dashboard" class="btn-white">View Live Dashboard</a>
+      <a href="https://github.com/saurabhthorat999/business_insights" target="_blank" class="btn-outline">View on GitHub</a>
       <a href="project1.html" class="btn-outline">← All Projects</a>
     </div>
   </section>
@@ -242,6 +249,15 @@
           <li><strong>Data-Driven Decisions:</strong> Enhancing market strategies</li>
         </ul>
       </div>
+    </div>
+
+    <!-- Live Dashboard -->
+    <div class="full-card" id="live-dashboard" data-aos="fade-up">
+      <h2>🖥️ Live Dashboard</h2>
+      <div class="pbi-wrap">
+<iframe title="Sales Dash Final" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiZGQ4Y2YwYjctMDE0Mi00ZmFhLTk2NGYtZWJlYzU2MDJhN2I5IiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9" frameborder="0" allowFullScreen="true"></iframe>
+      </div>
+      <p class="preview-cap">Interactive Power BI report: use the slicers and click any chart to filter. <a href="https://app.powerbi.com/view?r=eyJrIjoiZGQ4Y2YwYjctMDE0Mi00ZmFhLTk2NGYtZWJlYzU2MDJhN2I5IiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9" target="_blank" rel="noopener">Open full screen</a></p>
     </div>
 
     <!-- Dataset -->
