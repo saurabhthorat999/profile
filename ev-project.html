@@ -102,6 +102,12 @@
     .content-card ul li { margin-bottom: 10px; font-size: 0.9rem; line-height: 1.6; color: #555; }
     .content-card ul li strong { color: #333; }
 
+    /* Live dashboard embed */
+    .pbi-wrap { position: relative; width: 100%; aspect-ratio: 600 / 373.5; border-radius: 12px; overflow: hidden; border: 1px solid #e5eaf0; background: #f0faf8; }
+    .pbi-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .preview-cap { font-size: 0.82rem; color: #777; margin: 12px 0 0 !important; }
+    .preview-cap a { color: #0b6e5f; font-weight: 600; }
+
     /* Manufacturer table */
     .maker-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.88rem; }
     .maker-table thead tr { background: #0b6e5f; color: #fff; }
@@ -185,7 +191,8 @@
       <span class="hero-tag">Data Analysis</span>
     </div>
     <div class="hero-btns">
-      <a href="https://github.com/saurabhthorat999/EV-Sales-analysis" target="_blank" class="btn-white">View on GitHub</a>
+      <a href="#live-dashboard" class="btn-white">View Live Dashboard</a>
+      <a href="https://github.com/saurabhthorat999/EV-Sales-analysis" target="_blank" class="btn-outline">View on GitHub</a>
       <a href="project1.html" class="btn-outline">← All Projects</a>
     </div>
   </section>
@@ -220,6 +227,15 @@
     <div class="full-card" data-aos="fade-up">
       <h2>📋 Project Overview</h2>
       <p>The Electric Vehicle (EV) industry has seen rapid transformation over the past few years, driven by technological advancements, government policies, and shifting consumer preferences. This analysis covers the Indian EV market from 2022 to 2024, examining sales trends, manufacturer performance, state-wise penetration, and seasonal patterns to help stakeholders make strategic investment decisions.</p>
+    </div>
+
+    <!-- Live Dashboard -->
+    <div class="full-card" id="live-dashboard" data-aos="fade-up">
+      <h2>🖥️ Live Dashboard</h2>
+      <div class="pbi-wrap">
+        <iframe title="EV Dashboard" src="https://app.powerbi.com/view?r=eyJrIjoiNjQ5Y2IyNjUtMDNhNi00ZGIyLTk3OTQtY2U2NTRhMzIzYWVkIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9" frameborder="0" allowfullscreen="true" loading="lazy"></iframe>
+      </div>
+      <p class="preview-cap">Interactive Power BI report: use the slicers and click any chart to filter. <a href="https://app.powerbi.com/view?r=eyJrIjoiNjQ5Y2IyNjUtMDNhNi00ZGIyLTk3OTQtY2U2NTRhMzIzYWVkIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9" target="_blank" rel="noopener">Open full screen</a></p>
     </div>
 
     <!-- Tech Stack -->
